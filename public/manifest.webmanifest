@@ -1,0 +1,14 @@
+{
+  "name": "TCC Student Clearance",
+  "short_name": "TCC Clearance",
+  "description": "Student Clearance Management System of Torres Capitol College, Inc.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f9fc",
+  "theme_color": "#2346b8",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
