@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { errMsg, fetchMe, homeFor, PROGRAMS } from "@/lib/session";
+import { fetchMe, homeFor, PROGRAMS } from "@/lib/session";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (s: Record<string, unknown>) => ({ inactive: s.inactive ? 1 : undefined, tab: s.tab === "register" ? "register" : undefined }),
@@ -89,13 +89,6 @@ function AuthPage() {
     setRegistered(email);
   }
 
-  const F = ({ id, label, children }: { id: string; label: string; children: React.ReactNode }) => (
-    <div className="space-y-1.5">
-      <Label htmlFor={id}>{label}</Label>
-      {children}
-      {errors[id] && <p className="text-xs text-danger">{errors[id]}</p>}
-    </div>
-  );
   const r = (k: keyof typeof reg) => ({ id: k, value: reg[k], onChange: (e: React.ChangeEvent<HTMLInputElement>) => setReg({ ...reg, [k]: e.target.value }) });
 
   return (
@@ -142,8 +135,8 @@ function AuthPage() {
               </TabsList>
               <TabsContent value="login">
                 <form onSubmit={doLogin} className="space-y-4" noValidate>
-                  <F id="email" label="Email"><Input id="email" type="email" autoComplete="email" value={login.email} onChange={(e) => setLogin({ ...login, email: e.target.value })} /></F>
-                  <F id="password" label="Password"><Input id="password" type="password" autoComplete="current-password" value={login.password} onChange={(e) => setLogin({ ...login, password: e.target.value })} /></F>
+                  <Field error={errors["email"]} id="email" label="Email"><Input id="email" type="email" autoComplete="email" value={login.email} onChange={(e) => setLogin({ ...login, email: e.target.value })} /></Field>
+                  <Field error={errors["password"]} id="password" label="Password"><Input id="password" type="password" autoComplete="current-password" value={login.password} onChange={(e) => setLogin({ ...login, password: e.target.value })} /></Field>
                   <div className="text-right"><Link to="/forgot-password" className="text-sm font-medium text-primary hover:underline">Forgot password?</Link></div>
                   <Button type="submit" className="h-11 w-full" disabled={busy}>{busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Sign in</Button>
                 </form>
@@ -158,26 +151,26 @@ function AuthPage() {
               </TabsContent>
               <TabsContent value="register">
                 <form onSubmit={doRegister} className="grid grid-cols-1 gap-3 sm:grid-cols-2" noValidate>
-                  <F id="student_number" label="Student ID"><Input placeholder="2024-00123" {...r("student_number")} /></F>
-                  <F id="contact_number" label="Contact number"><Input placeholder="09XXXXXXXXX" inputMode="tel" {...r("contact_number")} /></F>
-                  <F id="first_name" label="First name"><Input {...r("first_name")} /></F>
-                  <F id="last_name" label="Last name"><Input {...r("last_name")} /></F>
-                  <F id="middle_name" label="Middle name (optional)"><Input {...r("middle_name")} /></F>
-                  <F id="section" label="Section (optional)"><Input placeholder="A" {...r("section")} /></F>
-                  <F id="program" label="Program">
+                  <Field error={errors["student_number"]} id="student_number" label="Student ID"><Input placeholder="2024-00123" {...r("student_number")} /></Field>
+                  <Field error={errors["contact_number"]} id="contact_number" label="Contact number"><Input placeholder="09XXXXXXXXX" inputMode="tel" {...r("contact_number")} /></Field>
+                  <Field error={errors["first_name"]} id="first_name" label="First name"><Input {...r("first_name")} /></Field>
+                  <Field error={errors["last_name"]} id="last_name" label="Last name"><Input {...r("last_name")} /></Field>
+                  <Field error={errors["middle_name"]} id="middle_name" label="Middle name (optional)"><Input {...r("middle_name")} /></Field>
+                  <Field error={errors["section"]} id="section" label="Section (optional)"><Input placeholder="A" {...r("section")} /></Field>
+                  <Field error={errors["program"]} id="program" label="Program">
                     <Select value={reg.program} onValueChange={(v) => setReg({ ...reg, program: v })}>
                       <SelectTrigger id="program"><SelectValue placeholder="Choose program" /></SelectTrigger>
                       <SelectContent>{PROGRAMS.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
                     </Select>
-                  </F>
-                  <F id="year_level" label="Year level">
+                  </Field>
+                  <Field error={errors["year_level"]} id="year_level" label="Year level">
                     <Select value={reg.year_level} onValueChange={(v) => setReg({ ...reg, year_level: v })}>
                       <SelectTrigger id="year_level"><SelectValue /></SelectTrigger>
                       <SelectContent>{[1, 2, 3, 4, 5].map((y) => <SelectItem key={y} value={String(y)}>Year {y}</SelectItem>)}</SelectContent>
                     </Select>
-                  </F>
-                  <div className="sm:col-span-2"><F id="email" label="Email"><Input type="email" autoComplete="email" {...r("email")} /></F></div>
-                  <div className="sm:col-span-2"><F id="password" label="Password"><Input type="password" autoComplete="new-password" {...r("password")} /></F></div>
+                  </Field>
+                  <div className="sm:col-span-2"><Field error={errors["email"]} id="email" label="Email"><Input type="email" autoComplete="email" {...r("email")} /></Field></div>
+                  <div className="sm:col-span-2"><Field error={errors["password"]} id="password" label="Password"><Input type="password" autoComplete="new-password" {...r("password")} /></Field></div>
                   <Button type="submit" className="h-11 sm:col-span-2" disabled={busy}>{busy && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Create student account</Button>
                 </form>
               </TabsContent>
@@ -189,4 +182,13 @@ function AuthPage() {
   );
 }
 
-export { errMsg };
+
+function Field({ id, label, error, children }: { id: string; label: string; error?: string; children: React.ReactNode }) {
+  return (
+    <div className="space-y-1.5">
+      <Label htmlFor={id}>{label}</Label>
+      {children}
+      {error && <p className="text-xs text-danger">{error}</p>}
+    </div>
+  );
+}
