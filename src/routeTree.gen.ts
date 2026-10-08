@@ -17,7 +17,9 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedStudentRouteImport } from './routes/_authenticated/student'
 import { Route as AuthenticatedStudentIndexRouteImport } from './routes/_authenticated/student.index'
 import { Route as AuthenticatedStudentClearanceRouteImport } from './routes/_authenticated/student.clearance'
+import { Route as AuthenticatedStudentHelpRouteImport } from './routes/_authenticated/student.help'
 import { Route as AuthenticatedStudentNotificationsRouteImport } from './routes/_authenticated/student.notifications'
+import { Route as AuthenticatedStudentProfileRouteImport } from './routes/_authenticated/student.profile'
 import { Route as AuthenticatedStudentStatusRouteImport } from './routes/_authenticated/student.status'
 import { Route as AuthenticatedStudentCertificateIdRouteImport } from './routes/_authenticated/student.certificate.$id'
 import { Route as AuthenticatedStudentHistoryIdRouteImport } from './routes/_authenticated/student.history.$id'
@@ -63,10 +65,22 @@ const AuthenticatedStudentClearanceRoute =
     path: '/clearance',
     getParentRoute: () => AuthenticatedStudentRoute,
   } as any)
+const AuthenticatedStudentHelpRoute =
+  AuthenticatedStudentHelpRouteImport.update({
+    id: '/help',
+    path: '/help',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
 const AuthenticatedStudentNotificationsRoute =
   AuthenticatedStudentNotificationsRouteImport.update({
     id: '/notifications',
     path: '/notifications',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedStudentProfileRoute =
+  AuthenticatedStudentProfileRouteImport.update({
+    id: '/profile',
+    path: '/profile',
     getParentRoute: () => AuthenticatedStudentRoute,
   } as any)
 const AuthenticatedStudentStatusRoute =
@@ -95,7 +109,9 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/student': typeof AuthenticatedStudentRouteWithChildren
   '/student/clearance': typeof AuthenticatedStudentClearanceRoute
+  '/student/help': typeof AuthenticatedStudentHelpRoute
   '/student/notifications': typeof AuthenticatedStudentNotificationsRoute
+  '/student/profile': typeof AuthenticatedStudentProfileRoute
   '/student/status': typeof AuthenticatedStudentStatusRoute
   '/student/': typeof AuthenticatedStudentIndexRoute
   '/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
@@ -107,7 +123,9 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/student/clearance': typeof AuthenticatedStudentClearanceRoute
+  '/student/help': typeof AuthenticatedStudentHelpRoute
   '/student/notifications': typeof AuthenticatedStudentNotificationsRoute
+  '/student/profile': typeof AuthenticatedStudentProfileRoute
   '/student/status': typeof AuthenticatedStudentStatusRoute
   '/student': typeof AuthenticatedStudentIndexRoute
   '/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
@@ -122,7 +140,9 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/student': typeof AuthenticatedStudentRouteWithChildren
   '/_authenticated/student/clearance': typeof AuthenticatedStudentClearanceRoute
+  '/_authenticated/student/help': typeof AuthenticatedStudentHelpRoute
   '/_authenticated/student/notifications': typeof AuthenticatedStudentNotificationsRoute
+  '/_authenticated/student/profile': typeof AuthenticatedStudentProfileRoute
   '/_authenticated/student/status': typeof AuthenticatedStudentStatusRoute
   '/_authenticated/student/': typeof AuthenticatedStudentIndexRoute
   '/_authenticated/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
@@ -137,7 +157,9 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/student'
     | '/student/clearance'
+    | '/student/help'
     | '/student/notifications'
+    | '/student/profile'
     | '/student/status'
     | '/student/'
     | '/student/certificate/$id'
@@ -149,7 +171,9 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/reset-password'
     | '/student/clearance'
+    | '/student/help'
     | '/student/notifications'
+    | '/student/profile'
     | '/student/status'
     | '/student'
     | '/student/certificate/$id'
@@ -163,7 +187,9 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/student'
     | '/_authenticated/student/clearance'
+    | '/_authenticated/student/help'
     | '/_authenticated/student/notifications'
+    | '/_authenticated/student/profile'
     | '/_authenticated/student/status'
     | '/_authenticated/student/'
     | '/_authenticated/student/certificate/$id'
@@ -236,11 +262,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudentClearanceRouteImport
       parentRoute: typeof AuthenticatedStudentRoute
     }
+    '/_authenticated/student/help': {
+      id: '/_authenticated/student/help'
+      path: '/help'
+      fullPath: '/student/help'
+      preLoaderRoute: typeof AuthenticatedStudentHelpRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
     '/_authenticated/student/notifications': {
       id: '/_authenticated/student/notifications'
       path: '/notifications'
       fullPath: '/student/notifications'
       preLoaderRoute: typeof AuthenticatedStudentNotificationsRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/student/profile': {
+      id: '/_authenticated/student/profile'
+      path: '/profile'
+      fullPath: '/student/profile'
+      preLoaderRoute: typeof AuthenticatedStudentProfileRouteImport
       parentRoute: typeof AuthenticatedStudentRoute
     }
     '/_authenticated/student/status': {
@@ -269,7 +309,9 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedStudentRouteChildren {
   AuthenticatedStudentClearanceRoute: typeof AuthenticatedStudentClearanceRoute
+  AuthenticatedStudentHelpRoute: typeof AuthenticatedStudentHelpRoute
   AuthenticatedStudentNotificationsRoute: typeof AuthenticatedStudentNotificationsRoute
+  AuthenticatedStudentProfileRoute: typeof AuthenticatedStudentProfileRoute
   AuthenticatedStudentStatusRoute: typeof AuthenticatedStudentStatusRoute
   AuthenticatedStudentIndexRoute: typeof AuthenticatedStudentIndexRoute
   AuthenticatedStudentCertificateIdRoute: typeof AuthenticatedStudentCertificateIdRoute
@@ -278,8 +320,10 @@ interface AuthenticatedStudentRouteChildren {
 
 const AuthenticatedStudentRouteChildren: AuthenticatedStudentRouteChildren = {
   AuthenticatedStudentClearanceRoute: AuthenticatedStudentClearanceRoute,
+  AuthenticatedStudentHelpRoute: AuthenticatedStudentHelpRoute,
   AuthenticatedStudentNotificationsRoute:
     AuthenticatedStudentNotificationsRoute,
+  AuthenticatedStudentProfileRoute: AuthenticatedStudentProfileRoute,
   AuthenticatedStudentStatusRoute: AuthenticatedStudentStatusRoute,
   AuthenticatedStudentIndexRoute: AuthenticatedStudentIndexRoute,
   AuthenticatedStudentCertificateIdRoute:
