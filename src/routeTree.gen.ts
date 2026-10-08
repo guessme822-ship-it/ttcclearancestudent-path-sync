@@ -10,33 +10,172 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedStudentRouteImport } from './routes/_authenticated/student'
+import { Route as AuthenticatedStudentIndexRouteImport } from './routes/_authenticated/student.index'
+import { Route as AuthenticatedStudentClearanceRouteImport } from './routes/_authenticated/student.clearance'
+import { Route as AuthenticatedStudentNotificationsRouteImport } from './routes/_authenticated/student.notifications'
+import { Route as AuthenticatedStudentStatusRouteImport } from './routes/_authenticated/student.status'
+import { Route as AuthenticatedStudentCertificateIdRouteImport } from './routes/_authenticated/student.certificate.$id'
+import { Route as AuthenticatedStudentHistoryIdRouteImport } from './routes/_authenticated/student.history.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedStudentRoute = AuthenticatedStudentRouteImport.update({
+  id: '/student',
+  path: '/student',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedStudentIndexRoute =
+  AuthenticatedStudentIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedStudentClearanceRoute =
+  AuthenticatedStudentClearanceRouteImport.update({
+    id: '/clearance',
+    path: '/clearance',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedStudentNotificationsRoute =
+  AuthenticatedStudentNotificationsRouteImport.update({
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedStudentStatusRoute =
+  AuthenticatedStudentStatusRouteImport.update({
+    id: '/status',
+    path: '/status',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedStudentCertificateIdRoute =
+  AuthenticatedStudentCertificateIdRouteImport.update({
+    id: '/certificate/$id',
+    path: '/certificate/$id',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
+const AuthenticatedStudentHistoryIdRoute =
+  AuthenticatedStudentHistoryIdRouteImport.update({
+    id: '/history/$id',
+    path: '/history/$id',
+    getParentRoute: () => AuthenticatedStudentRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/student': typeof AuthenticatedStudentRouteWithChildren
+  '/student/clearance': typeof AuthenticatedStudentClearanceRoute
+  '/student/notifications': typeof AuthenticatedStudentNotificationsRoute
+  '/student/status': typeof AuthenticatedStudentStatusRoute
+  '/student/': typeof AuthenticatedStudentIndexRoute
+  '/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
+  '/student/history/$id': typeof AuthenticatedStudentHistoryIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/student/clearance': typeof AuthenticatedStudentClearanceRoute
+  '/student/notifications': typeof AuthenticatedStudentNotificationsRoute
+  '/student/status': typeof AuthenticatedStudentStatusRoute
+  '/student': typeof AuthenticatedStudentIndexRoute
+  '/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
+  '/student/history/$id': typeof AuthenticatedStudentHistoryIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/student': typeof AuthenticatedStudentRouteWithChildren
+  '/_authenticated/student/clearance': typeof AuthenticatedStudentClearanceRoute
+  '/_authenticated/student/notifications': typeof AuthenticatedStudentNotificationsRoute
+  '/_authenticated/student/status': typeof AuthenticatedStudentStatusRoute
+  '/_authenticated/student/': typeof AuthenticatedStudentIndexRoute
+  '/_authenticated/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
+  '/_authenticated/student/history/$id': typeof AuthenticatedStudentHistoryIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/student'
+    | '/student/clearance'
+    | '/student/notifications'
+    | '/student/status'
+    | '/student/'
+    | '/student/certificate/$id'
+    | '/student/history/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/student/clearance'
+    | '/student/notifications'
+    | '/student/status'
+    | '/student'
+    | '/student/certificate/$id'
+    | '/student/history/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/_authenticated/student'
+    | '/_authenticated/student/clearance'
+    | '/_authenticated/student/notifications'
+    | '/_authenticated/student/status'
+    | '/_authenticated/student/'
+    | '/_authenticated/student/certificate/$id'
+    | '/_authenticated/student/history/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +187,126 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/student': {
+      id: '/_authenticated/student'
+      path: '/student'
+      fullPath: '/student'
+      preLoaderRoute: typeof AuthenticatedStudentRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/student/': {
+      id: '/_authenticated/student/'
+      path: '/'
+      fullPath: '/student/'
+      preLoaderRoute: typeof AuthenticatedStudentIndexRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/student/clearance': {
+      id: '/_authenticated/student/clearance'
+      path: '/clearance'
+      fullPath: '/student/clearance'
+      preLoaderRoute: typeof AuthenticatedStudentClearanceRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/student/notifications': {
+      id: '/_authenticated/student/notifications'
+      path: '/notifications'
+      fullPath: '/student/notifications'
+      preLoaderRoute: typeof AuthenticatedStudentNotificationsRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/student/status': {
+      id: '/_authenticated/student/status'
+      path: '/status'
+      fullPath: '/student/status'
+      preLoaderRoute: typeof AuthenticatedStudentStatusRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/student/certificate/$id': {
+      id: '/_authenticated/student/certificate/$id'
+      path: '/certificate/$id'
+      fullPath: '/student/certificate/$id'
+      preLoaderRoute: typeof AuthenticatedStudentCertificateIdRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
+    '/_authenticated/student/history/$id': {
+      id: '/_authenticated/student/history/$id'
+      path: '/history/$id'
+      fullPath: '/student/history/$id'
+      preLoaderRoute: typeof AuthenticatedStudentHistoryIdRouteImport
+      parentRoute: typeof AuthenticatedStudentRoute
+    }
   }
 }
 
+interface AuthenticatedStudentRouteChildren {
+  AuthenticatedStudentClearanceRoute: typeof AuthenticatedStudentClearanceRoute
+  AuthenticatedStudentNotificationsRoute: typeof AuthenticatedStudentNotificationsRoute
+  AuthenticatedStudentStatusRoute: typeof AuthenticatedStudentStatusRoute
+  AuthenticatedStudentIndexRoute: typeof AuthenticatedStudentIndexRoute
+  AuthenticatedStudentCertificateIdRoute: typeof AuthenticatedStudentCertificateIdRoute
+  AuthenticatedStudentHistoryIdRoute: typeof AuthenticatedStudentHistoryIdRoute
+}
+
+const AuthenticatedStudentRouteChildren: AuthenticatedStudentRouteChildren = {
+  AuthenticatedStudentClearanceRoute: AuthenticatedStudentClearanceRoute,
+  AuthenticatedStudentNotificationsRoute:
+    AuthenticatedStudentNotificationsRoute,
+  AuthenticatedStudentStatusRoute: AuthenticatedStudentStatusRoute,
+  AuthenticatedStudentIndexRoute: AuthenticatedStudentIndexRoute,
+  AuthenticatedStudentCertificateIdRoute:
+    AuthenticatedStudentCertificateIdRoute,
+  AuthenticatedStudentHistoryIdRoute: AuthenticatedStudentHistoryIdRoute,
+}
+
+const AuthenticatedStudentRouteWithChildren =
+  AuthenticatedStudentRoute._addFileChildren(AuthenticatedStudentRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedStudentRoute: typeof AuthenticatedStudentRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedStudentRoute: AuthenticatedStudentRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
