@@ -14,10 +14,13 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedStaffRouteImport } from './routes/_authenticated/staff'
 import { Route as AuthenticatedStudentRouteImport } from './routes/_authenticated/student'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminNotificationsRouteImport } from './routes/_authenticated/admin.notifications'
 import { Route as AuthenticatedAdminProfileRouteImport } from './routes/_authenticated/admin.profile'
+import { Route as AuthenticatedAdminRequestsRouteImport } from './routes/_authenticated/admin.requests'
 import { Route as AuthenticatedStaffIndexRouteImport } from './routes/_authenticated/staff.index'
 import { Route as AuthenticatedStaffNotificationsRouteImport } from './routes/_authenticated/staff.notifications'
 import { Route as AuthenticatedStaffProfileRouteImport } from './routes/_authenticated/staff.profile'
@@ -27,6 +30,7 @@ import { Route as AuthenticatedStudentHelpRouteImport } from './routes/_authenti
 import { Route as AuthenticatedStudentNotificationsRouteImport } from './routes/_authenticated/student.notifications'
 import { Route as AuthenticatedStudentProfileRouteImport } from './routes/_authenticated/student.profile'
 import { Route as AuthenticatedStudentStatusRouteImport } from './routes/_authenticated/student.status'
+import { Route as AuthenticatedAdminRequestsIdRouteImport } from './routes/_authenticated/admin.requests.$id'
 import { Route as AuthenticatedStaffRequestsIdRouteImport } from './routes/_authenticated/staff.requests.$id'
 import { Route as AuthenticatedStudentCertificateIdRouteImport } from './routes/_authenticated/student.certificate.$id'
 import { Route as AuthenticatedStudentHistoryIdRouteImport } from './routes/_authenticated/student.history.$id'
@@ -55,6 +59,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedStaffRoute = AuthenticatedStaffRouteImport.update({
   id: '/staff',
   path: '/staff',
@@ -65,17 +74,28 @@ const AuthenticatedStudentRoute = AuthenticatedStudentRouteImport.update({
   path: '/student',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const AuthenticatedAdminNotificationsRoute =
   AuthenticatedAdminNotificationsRouteImport.update({
-    id: '/admin/notifications',
-    path: '/admin/notifications',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/notifications',
+    path: '/notifications',
+    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminProfileRoute =
   AuthenticatedAdminProfileRouteImport.update({
-    id: '/admin/profile',
-    path: '/admin/profile',
-    getParentRoute: () => AuthenticatedRouteRoute,
+    id: '/profile',
+    path: '/profile',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminRequestsRoute =
+  AuthenticatedAdminRequestsRouteImport.update({
+    id: '/requests',
+    path: '/requests',
+    getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedStaffIndexRoute = AuthenticatedStaffIndexRouteImport.update({
   id: '/',
@@ -130,6 +150,12 @@ const AuthenticatedStudentStatusRoute =
     path: '/status',
     getParentRoute: () => AuthenticatedStudentRoute,
   } as any)
+const AuthenticatedAdminRequestsIdRoute =
+  AuthenticatedAdminRequestsIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
+    getParentRoute: () => AuthenticatedAdminRequestsRoute,
+  } as any)
 const AuthenticatedStaffRequestsIdRoute =
   AuthenticatedStaffRequestsIdRouteImport.update({
     id: '/requests/$id',
@@ -154,10 +180,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/staff': typeof AuthenticatedStaffRouteWithChildren
   '/student': typeof AuthenticatedStudentRouteWithChildren
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
+  '/admin/requests': typeof AuthenticatedAdminRequestsRouteWithChildren
   '/staff/notifications': typeof AuthenticatedStaffNotificationsRoute
   '/staff/profile': typeof AuthenticatedStaffProfileRoute
   '/student/clearance': typeof AuthenticatedStudentClearanceRoute
@@ -165,8 +193,10 @@ export interface FileRoutesByFullPath {
   '/student/notifications': typeof AuthenticatedStudentNotificationsRoute
   '/student/profile': typeof AuthenticatedStudentProfileRoute
   '/student/status': typeof AuthenticatedStudentStatusRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/staff/': typeof AuthenticatedStaffIndexRoute
   '/student/': typeof AuthenticatedStudentIndexRoute
+  '/admin/requests/$id': typeof AuthenticatedAdminRequestsIdRoute
   '/staff/requests/$id': typeof AuthenticatedStaffRequestsIdRoute
   '/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
   '/student/history/$id': typeof AuthenticatedStudentHistoryIdRoute
@@ -178,6 +208,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
+  '/admin/requests': typeof AuthenticatedAdminRequestsRouteWithChildren
   '/staff/notifications': typeof AuthenticatedStaffNotificationsRoute
   '/staff/profile': typeof AuthenticatedStaffProfileRoute
   '/student/clearance': typeof AuthenticatedStudentClearanceRoute
@@ -185,8 +216,10 @@ export interface FileRoutesByTo {
   '/student/notifications': typeof AuthenticatedStudentNotificationsRoute
   '/student/profile': typeof AuthenticatedStudentProfileRoute
   '/student/status': typeof AuthenticatedStudentStatusRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/staff': typeof AuthenticatedStaffIndexRoute
   '/student': typeof AuthenticatedStudentIndexRoute
+  '/admin/requests/$id': typeof AuthenticatedAdminRequestsIdRoute
   '/staff/requests/$id': typeof AuthenticatedStaffRequestsIdRoute
   '/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
   '/student/history/$id': typeof AuthenticatedStudentHistoryIdRoute
@@ -198,10 +231,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/staff': typeof AuthenticatedStaffRouteWithChildren
   '/_authenticated/student': typeof AuthenticatedStudentRouteWithChildren
   '/_authenticated/admin/notifications': typeof AuthenticatedAdminNotificationsRoute
   '/_authenticated/admin/profile': typeof AuthenticatedAdminProfileRoute
+  '/_authenticated/admin/requests': typeof AuthenticatedAdminRequestsRouteWithChildren
   '/_authenticated/staff/notifications': typeof AuthenticatedStaffNotificationsRoute
   '/_authenticated/staff/profile': typeof AuthenticatedStaffProfileRoute
   '/_authenticated/student/clearance': typeof AuthenticatedStudentClearanceRoute
@@ -209,8 +244,10 @@ export interface FileRoutesById {
   '/_authenticated/student/notifications': typeof AuthenticatedStudentNotificationsRoute
   '/_authenticated/student/profile': typeof AuthenticatedStudentProfileRoute
   '/_authenticated/student/status': typeof AuthenticatedStudentStatusRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/staff/': typeof AuthenticatedStaffIndexRoute
   '/_authenticated/student/': typeof AuthenticatedStudentIndexRoute
+  '/_authenticated/admin/requests/$id': typeof AuthenticatedAdminRequestsIdRoute
   '/_authenticated/staff/requests/$id': typeof AuthenticatedStaffRequestsIdRoute
   '/_authenticated/student/certificate/$id': typeof AuthenticatedStudentCertificateIdRoute
   '/_authenticated/student/history/$id': typeof AuthenticatedStudentHistoryIdRoute
@@ -222,10 +259,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/forgot-password'
     | '/reset-password'
+    | '/admin'
     | '/staff'
     | '/student'
     | '/admin/notifications'
     | '/admin/profile'
+    | '/admin/requests'
     | '/staff/notifications'
     | '/staff/profile'
     | '/student/clearance'
@@ -233,8 +272,10 @@ export interface FileRouteTypes {
     | '/student/notifications'
     | '/student/profile'
     | '/student/status'
+    | '/admin/'
     | '/staff/'
     | '/student/'
+    | '/admin/requests/$id'
     | '/staff/requests/$id'
     | '/student/certificate/$id'
     | '/student/history/$id'
@@ -246,6 +287,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin/notifications'
     | '/admin/profile'
+    | '/admin/requests'
     | '/staff/notifications'
     | '/staff/profile'
     | '/student/clearance'
@@ -253,8 +295,10 @@ export interface FileRouteTypes {
     | '/student/notifications'
     | '/student/profile'
     | '/student/status'
+    | '/admin'
     | '/staff'
     | '/student'
+    | '/admin/requests/$id'
     | '/staff/requests/$id'
     | '/student/certificate/$id'
     | '/student/history/$id'
@@ -265,10 +309,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/forgot-password'
     | '/reset-password'
+    | '/_authenticated/admin'
     | '/_authenticated/staff'
     | '/_authenticated/student'
     | '/_authenticated/admin/notifications'
     | '/_authenticated/admin/profile'
+    | '/_authenticated/admin/requests'
     | '/_authenticated/staff/notifications'
     | '/_authenticated/staff/profile'
     | '/_authenticated/student/clearance'
@@ -276,8 +322,10 @@ export interface FileRouteTypes {
     | '/_authenticated/student/notifications'
     | '/_authenticated/student/profile'
     | '/_authenticated/student/status'
+    | '/_authenticated/admin/'
     | '/_authenticated/staff/'
     | '/_authenticated/student/'
+    | '/_authenticated/admin/requests/$id'
     | '/_authenticated/staff/requests/$id'
     | '/_authenticated/student/certificate/$id'
     | '/_authenticated/student/history/$id'
@@ -328,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/staff': {
       id: '/_authenticated/staff'
       path: '/staff'
@@ -342,19 +397,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudentRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/notifications': {
       id: '/_authenticated/admin/notifications'
-      path: '/admin/notifications'
+      path: '/notifications'
       fullPath: '/admin/notifications'
       preLoaderRoute: typeof AuthenticatedAdminNotificationsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/profile': {
       id: '/_authenticated/admin/profile'
-      path: '/admin/profile'
+      path: '/profile'
       fullPath: '/admin/profile'
       preLoaderRoute: typeof AuthenticatedAdminProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/requests': {
+      id: '/_authenticated/admin/requests'
+      path: '/requests'
+      fullPath: '/admin/requests'
+      preLoaderRoute: typeof AuthenticatedAdminRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/staff/': {
       id: '/_authenticated/staff/'
@@ -419,6 +488,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudentStatusRouteImport
       parentRoute: typeof AuthenticatedStudentRoute
     }
+    '/_authenticated/admin/requests/$id': {
+      id: '/_authenticated/admin/requests/$id'
+      path: '/$id'
+      fullPath: '/admin/requests/$id'
+      preLoaderRoute: typeof AuthenticatedAdminRequestsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRequestsRoute
+    }
     '/_authenticated/staff/requests/$id': {
       id: '/_authenticated/staff/requests/$id'
       path: '/requests/$id'
@@ -442,6 +518,37 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedAdminRequestsRouteChildren {
+  AuthenticatedAdminRequestsIdRoute: typeof AuthenticatedAdminRequestsIdRoute
+}
+
+const AuthenticatedAdminRequestsRouteChildren: AuthenticatedAdminRequestsRouteChildren =
+  {
+    AuthenticatedAdminRequestsIdRoute: AuthenticatedAdminRequestsIdRoute,
+  }
+
+const AuthenticatedAdminRequestsRouteWithChildren =
+  AuthenticatedAdminRequestsRoute._addFileChildren(
+    AuthenticatedAdminRequestsRouteChildren,
+  )
+
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
+  AuthenticatedAdminProfileRoute: typeof AuthenticatedAdminProfileRoute
+  AuthenticatedAdminRequestsRoute: typeof AuthenticatedAdminRequestsRouteWithChildren
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
+  AuthenticatedAdminProfileRoute: AuthenticatedAdminProfileRoute,
+  AuthenticatedAdminRequestsRoute: AuthenticatedAdminRequestsRouteWithChildren,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
 
 interface AuthenticatedStaffRouteChildren {
   AuthenticatedStaffNotificationsRoute: typeof AuthenticatedStaffNotificationsRoute
@@ -488,17 +595,15 @@ const AuthenticatedStudentRouteWithChildren =
   AuthenticatedStudentRoute._addFileChildren(AuthenticatedStudentRouteChildren)
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
   AuthenticatedStaffRoute: typeof AuthenticatedStaffRouteWithChildren
   AuthenticatedStudentRoute: typeof AuthenticatedStudentRouteWithChildren
-  AuthenticatedAdminNotificationsRoute: typeof AuthenticatedAdminNotificationsRoute
-  AuthenticatedAdminProfileRoute: typeof AuthenticatedAdminProfileRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedStaffRoute: AuthenticatedStaffRouteWithChildren,
   AuthenticatedStudentRoute: AuthenticatedStudentRouteWithChildren,
-  AuthenticatedAdminNotificationsRoute: AuthenticatedAdminNotificationsRoute,
-  AuthenticatedAdminProfileRoute: AuthenticatedAdminProfileRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
