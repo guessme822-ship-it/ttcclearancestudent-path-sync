@@ -37,6 +37,8 @@ export const officesQuery = queryOptions({
   queryFn: async () => {
     const { data, error } = await supabase.from("offices").select("*, office_staff(user_id, profiles!office_staff_user_id_fkey(first_name, last_name))").order("sort_order");
     if (error) throw error;
-    return data as unknown as { id: string; name: string; description: string | null; is_active: boolean; sort_order: number; office_staff: { user_id: string; profiles: { first_name: string; last_name: string } | null }[] }[];
+    return data as unknown as OfficeRow[];
   },
 });
+
+export type OfficeRow = { id: string; name: string; description: string | null; is_active: boolean; sort_order: number; office_staff: { user_id: string; profiles: { first_name: string; last_name: string } | null }[] };
