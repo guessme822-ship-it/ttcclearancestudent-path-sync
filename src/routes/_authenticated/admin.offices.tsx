@@ -14,11 +14,11 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { EmptyState, ErrorState, ListSkeleton, PageHeader } from "@/components/states";
-import { officesQuery } from "@/lib/admin-data";
+import { officesQuery, type OfficeRow } from "@/lib/admin-data";
 import { errMsg } from "@/lib/session";
 
 export const Route = createFileRoute("/_authenticated/admin/offices")({ component: P });
-type O = NonNullable<ReturnType<typeof useQuery<Awaited<ReturnType<typeof officesQuery.queryFn & {}>>>>["data"]>[number];
+type O = OfficeRow;
 
 const log = (a: string, d?: string) => supabase.rpc("log_activity", { _action: a, _details: d });
 
